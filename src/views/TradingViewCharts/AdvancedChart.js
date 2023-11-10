@@ -14,8 +14,8 @@ function TradingViewWidget() {
         {
           "symbols": [
             [
-              "Amazon",
-              "AMZN|1D"
+              "Apple",
+              "AAPL|1D"
             ],
             [
               "Google",
@@ -51,7 +51,7 @@ function TradingViewWidget() {
           "lineWidth": 2,
           "lineType": 0,
           "dateRanges": [
-            +
+            "1d|1",
             "1m|30",
             "3m|60",
             "12m|1D",
@@ -67,7 +67,7 @@ function TradingViewWidget() {
   return (
     <div className="tradingview-widget-container" style={{width:"500px"}} ref={container}>
       <div className="tradingview-widget-container__widget"></div>
-      <div className="tradingview-widget-copyright"><a href="" rel="noopener nofollow" target="_blank"><span className="blue-text"></span></a></div>
+      <div className="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span className="blue-text"></span></a></div>
     </div>
   );
 }

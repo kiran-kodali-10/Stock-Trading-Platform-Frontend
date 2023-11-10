@@ -12,6 +12,9 @@ import routes from "routes.js";
 
 import logo from "assets/img/react-logo.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
+import { useSelector } from "react-redux";
+import Login from "views/Login/Login";
+import CustomNotification from "components/CustomNotification";
 
 var ps;
 
@@ -21,6 +24,15 @@ function Admin(props) {
   const [sidebarOpened, setsidebarOpened] = React.useState(
     document.documentElement.className.indexOf("nav-open") !== -1
   );
+  const userDetails = useSelector(state => state.user.userDetails);
+
+
+  React.useEffect(() => {
+    console.log("inside admin.js")
+    console.log(userDetails[0].firstName)
+
+  }, [userDetails])
+
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
@@ -80,41 +92,46 @@ function Admin(props) {
     return "Dashboard";
   };
   return (
-    <BackgroundColorContext.Consumer>
-      {({ color, changeColor }) => (
-        <React.Fragment>
-          <div className="wrapper">
-            <Sidebar
-              routes={routes}
-              logo={{
-                text: "Test User name",
-                imgSrc: logo,
-              }}
-              toggleSidebar={toggleSidebar}
-            />
-            <div className="main-panel" ref={mainPanelRef} data={color}>
-              <AdminNavbar
-                brandText={getBrandText(location.pathname)}
+    userDetails.length ?
+      <BackgroundColorContext.Consumer>
+        {({ color, changeColor }) => (
+          <React.Fragment>
+            <div className="wrapper">
+              <CustomNotification />
+              <Sidebar
+                routes={routes}
+                logo={{
+                  text: userDetails[0].firstName + " " + userDetails[0].lastName,
+                  imgSrc: logo,
+                }}
                 toggleSidebar={toggleSidebar}
-                sidebarOpened={sidebarOpened}
               />
-              <Routes>
-                {getRoutes(routes)}
-                <Route
-                  path="/"
-                  element={<Navigate to="/stock/dashboard" replace />}
+              <div className="main-panel" ref={mainPanelRef} data={color}>
+                <AdminNavbar
+                  brandText={getBrandText(location.pathname)}
+                  toggleSidebar={toggleSidebar}
+                  sidebarOpened={sidebarOpened}
                 />
-              </Routes>
-              {
-                // we don't want the Footer to be rendered on map page
-                location.pathname === "/admin/maps" ? null : <Footer fluid />
-              }
+                <Routes>
+                  {getRoutes(routes)}
+                  <Route
+                    path="/"
+                    element={<Navigate to="/stock/dashboard" replace />}
+                  />
+                </Routes>
+                {
+                  // we don't want the Footer to be rendered on map page
+                  // location.pathname === "/admin/maps" ? null : <Footer fluid />
+                }
+              </div>
             </div>
-          </div>
 
-        </React.Fragment>
-      )}
-    </BackgroundColorContext.Consumer>
+          </React.Fragment>
+        )}
+      </BackgroundColorContext.Consumer>
+      :
+      // Reroute to Login page
+      <Navigate to="/" />
   );
 }
 

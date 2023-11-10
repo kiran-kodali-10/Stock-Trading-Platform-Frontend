@@ -12,26 +12,28 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import BackgroundColorWrapper from "./components/BackgroundColorWrapper/BackgroundColorWrapper";
 import LoginPage from "views/Login/Login";
+import { Provider } from "react-redux";
+import store from "redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <ThemeContextWrapper>
     <BackgroundColorWrapper>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/stock/*" element={<AdminLayout />} />
-          <Route path = "/login" element={<LoginPage/>} />
-          {/* <Route
+      <Provider store={store}>
+        <BrowserRouter>
+        
+          <Routes>
+            {/* <Route path="/login" element={<LoginPage />} /> */}
+            {/* <Route
             path="*"
             element={<Navigate to="/stock/dashboard" replace />}
           /> */}
-          {/* <Route exact path="/" component={Login} />
-          <Route exact path="/home" render={(props) => <Admin {...props} />} />
-          <Route exact path="/admin" render={(props) => <Admin {...props} />} />
-          <Route exact path="/upload" render={(props) => <Admin {...props} />} /> */}
-        </Routes>
-      </BrowserRouter>
+            <Route path="/stock/*" element={<AdminLayout />} />
+            <Route exact path="/" element={<LoginPage />} />
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </BackgroundColorWrapper>
   </ThemeContextWrapper>
 );

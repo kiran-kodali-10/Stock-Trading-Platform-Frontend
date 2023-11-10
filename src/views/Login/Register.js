@@ -21,12 +21,9 @@ function Register(props) {
         event.preventDefault();
         console.log("Inside handle login submit")
         setSuccessfulLogin(true);
+        
 
     }
-    // useEffect(()=>{
-
-    // })
-
     return (
         <>
             <form

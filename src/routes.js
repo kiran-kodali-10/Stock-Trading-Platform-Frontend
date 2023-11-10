@@ -3,6 +3,7 @@ import Icons from "views/Icons.js";
 import Map from "views/Map.js";
 import Notifications from "views/Notifications.js";
 import UserProfile from "views/UserProfile.js";
+import LoginPage from "views/Login/Login.js"
 
 var routes = [
   {
