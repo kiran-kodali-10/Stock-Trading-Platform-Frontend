@@ -4,6 +4,7 @@ import Map from "views/Map.js";
 import Notifications from "views/Notifications.js";
 import UserProfile from "views/UserProfile.js";
 import LoginPage from "views/Login/Login.js"
+import OrderManagement from "views/OrderManagement/OrderManagement";
 
 var routes = [
   {
@@ -11,6 +12,13 @@ var routes = [
     name: "Dashboard",
     icon: "tim-icons icon-chart-pie-36",
     component: <Dashboard />,
+    layout: "/stock",
+  },
+  {
+    path: "/order_management",
+    name: "Order Management",
+    icon: "tim-icons icon-chart-pie-36",
+    component: <OrderManagement />,
     layout: "/stock",
   },
   {

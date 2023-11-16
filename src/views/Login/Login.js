@@ -7,6 +7,12 @@ import Register from './Register';
 import TradingViewWidget from 'views/TradingViewCharts/AdvancedChart';
 import { useDispatch, useSelector } from 'react-redux';
 import { validateUserLogin } from 'redux/userAPI';
+import { polygonClient, restClient, websocketClient } from "polygon.io";
+
+
+
+
+
 
 const useStyles = makeStyles(styles);
 
@@ -20,18 +26,29 @@ function Login(props) {
     // State variables for username and passwords
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const userDetails = useSelector(state => state.user.userDetails);
+
     const [successfulLogin, setSuccessfulLogin] = useState(false);
     const [register, setRegister] = useState(false);
 
-    const userDetails = useSelector(state => state.user.userDetails);
-
+    const rest = restClient("upf68cKLn9XKnn3Opk6h_h5yVxwxmeij", "https://api.polygon.io");
 
     React.useEffect(() => {
-        console.log("inside Login.js")
-        console.log(userDetails.length)
+
+           fetch("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo'",{
+            method:"GET"
+           })
+           .then(response => response.json())
+           .then(data=>console.log(data))
+           .catch(error=>console.log(error));
+        // rest.reference.tickers("AAPL", 1, "day", "2019-04-14", "2019-04-14").then((data) => {
+        //     console.log(data);
+        // }).catch(e => {
+        //     console.error('An error happened:', e);
+        // });
 
 
-    }, [userDetails])
+    }, [])
 
     const handleLoginSubmit = (event, username, password) => {
         event.preventDefault();
