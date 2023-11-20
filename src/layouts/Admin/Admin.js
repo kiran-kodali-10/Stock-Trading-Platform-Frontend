@@ -25,16 +25,11 @@ function Admin(props) {
     document.documentElement.className.indexOf("nav-open") !== -1
   );
   const userDetails = useSelector(state => state.user.userDetails);
-
-
-  React.useEffect(() => {
-    console.log("inside admin.js")
-    console.log(userDetails[0].firstName)
-
-  }, [userDetails])
+  const logout = useSelector(state => state.user.logout);
 
   React.useEffect(() => {
-    if (navigator.platform.indexOf("Win") > -1) {
+    if(logout)
+      if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
       document.documentElement.classList.remove("perfect-scrollbar-off");
       ps = new PerfectScrollbar(mainPanelRef.current, {
@@ -46,6 +41,7 @@ function Admin(props) {
       }
     }
     // Specify how to clean up after this effect:
+    if(logout)
     return function cleanup() {
       if (navigator.platform.indexOf("Win") > -1) {
         ps.destroy();
@@ -55,6 +51,7 @@ function Admin(props) {
     };
   });
   React.useEffect(() => {
+    if(logout)
     if (navigator.platform.indexOf("Win") > -1) {
       let tables = document.querySelectorAll(".table-responsive");
       for (let i = 0; i < tables.length; i++) {
@@ -92,7 +89,7 @@ function Admin(props) {
     return "Dashboard";
   };
   return (
-    userDetails.length ?
+    userDetails.length && !logout ?
       <BackgroundColorContext.Consumer>
         {({ color, changeColor }) => (
           <React.Fragment>
@@ -131,7 +128,9 @@ function Admin(props) {
       </BackgroundColorContext.Consumer>
       :
       // Reroute to Login page
-      <Navigate to="/" />
+      
+        <Navigate to="/" />
+      
   );
 }
 

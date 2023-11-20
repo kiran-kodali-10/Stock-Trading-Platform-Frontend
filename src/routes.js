@@ -5,6 +5,7 @@ import Notifications from "views/Notifications.js";
 import UserProfile from "views/UserProfile.js";
 import LoginPage from "views/Login/Login.js"
 import OrderManagement from "views/OrderManagement/OrderManagement";
+import Wallet from "views/WalletTransaction/Wallet";
 
 var routes = [
   {
@@ -17,8 +18,15 @@ var routes = [
   {
     path: "/order_management",
     name: "Order Management",
-    icon: "tim-icons icon-chart-pie-36",
+    icon: "tim-icons icon-basket-simple",
     component: <OrderManagement />,
+    layout: "/stock",
+  },
+  {
+    path: "/wallet",
+    name: "Wallet",
+    icon: "tim-icons icon-bank",
+    component: < Wallet/>,
     layout: "/stock",
   },
   {

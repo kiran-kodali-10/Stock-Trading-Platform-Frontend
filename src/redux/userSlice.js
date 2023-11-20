@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 
-const initialState = {userDetails:{}}
+const initialState = {userDetails:[], logout:false}
 
 export const userSlice = createSlice({
     name: "user",
@@ -10,6 +10,10 @@ export const userSlice = createSlice({
         validate: (state, action)=>{
             state.userToken = action.payload.userDetails.userToken;
             state.userDetails = action.payload.userDetails;
+        },
+        logout:(state, action)=>{
+            state.userDetails = []
+            state.logout = true
         }
     }
 })

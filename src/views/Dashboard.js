@@ -44,7 +44,7 @@ function Dashboard(props) {
       <div className="content">
         <Row>
           <Col xs="12" md="12" lg="12">
-            <TradingViewWidget/>
+            <TradingViewWidget />
           </Col>
         </Row>
         <Row>
@@ -100,6 +100,53 @@ function Dashboard(props) {
                     options={chartExample4.options}
                   />
                 </div>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col md="12" lg="12">
+            <Card>
+              <CardHeader>
+                <h3>Stocks</h3>
+              </CardHeader>
+              <CardBody>
+                <Table responsive>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Symbol</th>
+                      <th>app?</th>
+                      <th>rate</th>
+                      <th>quantity</th>
+                      <th>current</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Apple</td>
+                      <td>AAPL</td>
+                      <td>AAPL</td>
+                      <td>$150</td>
+                      <td>1</td>
+                      <td>
+                        <i style={{ color: "green", paddingRight: "5px" }} className="fa-solid fa-arrow-up" />
+                        10%
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Google</td>
+                      <td>GOOG</td>
+                      <td>GOOG</td>
+                      <td>$150</td>
+                      <td>1</td>
+                      <td>
+                        <i style={{ color: "red", paddingRight: "5px" }} className="fa-solid fa-arrow-down" />
+                        10%
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
               </CardBody>
             </Card>
           </Col>
@@ -384,7 +431,8 @@ function Dashboard(props) {
                       <th>Name</th>
                       <th>Country</th>
                       <th>City</th>
-                      <th className="text-center">Salary</th>
+                      <th className="text-center">Amount</th>
+                      <th className="text-center">Total</th>
                     </tr>
                   </thead>
                   <tbody>

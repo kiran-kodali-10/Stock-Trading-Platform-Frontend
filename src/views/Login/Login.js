@@ -35,12 +35,12 @@ function Login(props) {
 
     React.useEffect(() => {
 
-           fetch("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo'",{
-            method:"GET"
-           })
-           .then(response => response.json())
-           .then(data=>console.log(data))
-           .catch(error=>console.log(error));
+        //    fetch("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo'",{
+        //     method:"GET"
+        //    })
+        //    .then(response => response.json())
+        //    .then(data=>console.log(data))
+        //    .catch(error=>console.log(error));
         // rest.reference.tickers("AAPL", 1, "day", "2019-04-14", "2019-04-14").then((data) => {
         //     console.log(data);
         // }).catch(e => {
@@ -74,14 +74,10 @@ function Login(props) {
 
     }
 
-
-
-
     return (
         <div
             className={classes.container}
         >
-
             <Grid
                 container
                 direction="row"
@@ -98,7 +94,7 @@ function Login(props) {
                 >
                     {
                         register ?
-                            <Register />
+                            <Register setRegister={setRegister} />
                             :
                             <form
                                 className={classes.card}
@@ -115,6 +111,7 @@ function Login(props) {
                                     label="Username"
                                     variant="filled"
                                     placeholder="Enter your username"
+                                    required
                                     onChange={(event) => setUsername(event.target.value)}
                                 />
                                 <CustomTextField
@@ -123,6 +120,7 @@ function Login(props) {
                                     variant="filled"
                                     placeholder="Enter your password"
                                     type="password"
+                                    required
                                     onChange={(event) => setPassword(event.target.value)}
                                 />
                                 <Button

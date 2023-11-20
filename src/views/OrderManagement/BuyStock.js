@@ -23,6 +23,7 @@ export default function BuyStock(props) {
 
     const [company, setCompany] = useState("AAPL");
     const [numberOfStocks, setNumberOfStocks] = useState(0);
+    // const [selectedStockPrice]
 
     const symbols = {
         "Apple": "AAPL",
@@ -35,7 +36,7 @@ export default function BuyStock(props) {
         })
             .then(response => response.json())
             .then((data) => {
-                console.log(data)
+                console.log(data["Time Series (60min)"])
             })
             .catch(error => console.log(error));
     }, [company])
@@ -96,6 +97,7 @@ export default function BuyStock(props) {
                                                     <Input
                                                         type="number"
                                                         value={numberOfStocks}
+                                                        onChange={(event)=>setNumberOfStocks(event.target.value)}
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -115,7 +117,7 @@ export default function BuyStock(props) {
                                 </CardBody>
                                 <CardFooter>
                                     <Button className="btn-fill"  type="submit">
-                                        Save
+                                        Buy
                                     </Button>
                                 </CardFooter>
                             </Card>

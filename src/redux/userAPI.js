@@ -4,7 +4,7 @@ import { userActions } from "./userSlice";
 export const validateUserLogin = (username, password) => {
     return async (dispatch) => {
         const fetchData = async () => {
-            const response = await fetch('/api/login', {
+            const response = await fetch('/api/users/login', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -30,6 +30,7 @@ export const validateUserLogin = (username, password) => {
             }))
         } catch (error) {
             console.log(error);
+            alert("Email or Password incorrect")
             // or send the notification here
         }
 
@@ -40,7 +41,7 @@ export const validateUserLogin = (username, password) => {
 export const registerUser = (userDetails) => {
     return async (dispatch) => {
         const fetchData = async () => {
-            const response = await fetch("/api/register", {
+            const response = await fetch("/api/users/register", {
                 method: "POST",
                 headers: {
                     Accept: 'application/json',
