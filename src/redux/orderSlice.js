@@ -1,17 +1,15 @@
 const { createSlice } = require("@reduxjs/toolkit")
 
 const initialState = {
-    prices: {
-        
-    }
+    stockTransactions:[]
 }
 
 const orderSlice = createSlice({
     name: "order",
     initialState,
     reducers:{
-        setPrice:(state, action)=>{
-
+        buyStock:(state, action)=>{
+            // state.
         }
     }
 });

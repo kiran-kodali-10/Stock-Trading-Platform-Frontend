@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
     Card,
     Button,
@@ -21,33 +22,33 @@ import {
 
 export default function BuyStock(props) {
 
-    const [company, setCompany] = useState("AAPL");
-    const [numberOfStocks, setNumberOfStocks] = useState(0);
-    // const [selectedStockPrice]
+    const balance = useSelector(state => state.user.userDetails[0].balance)
+
+    const [company, setCompany] = useState("Apple");
+    const [numberOfStocks, setNumberOfStocks] = useState(1);
+    const [total, setTotal] = useState();
+
+    useEffect(() => {
+        const stockValue = props.stocksValue.find((element) => element["company"] === company)
+        setTotal(parseFloat(parseFloat(stockValue["close"]) * parseInt(numberOfStocks)))
+    }, [numberOfStocks])
 
     const symbols = {
         "Apple": "AAPL",
-        "IBM": "IBM",
-        "Microsoft": "MSFT"
+        "Amazon": "AMZN",
+        "Microsoft": "MSFT",
+        "Google": "GOOG"
     }
-    useEffect(() => {
-        fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbols[company]}&interval=60min&apikey=demo'`, {
-            method: "GET"
-        })
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data["Time Series (60min)"])
-            })
-            .catch(error => console.log(error));
-    }, [company])
 
     const handleDropdownChange = (event) => {
         console.log(event.target.value);
         setCompany(Object.keys(symbols).find(key => symbols[key] === event.target.value));
+        setNumberOfStocks(0)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log("inside handle submit")
     }
 
     return (
@@ -56,12 +57,12 @@ export default function BuyStock(props) {
                 <div className="">
                     <Row>
                         <Col md="8">
-                            <Card>
-                                <CardHeader>
-                                    <h4 className="title">Buy Stocks</h4>
-                                </CardHeader>
-                                <CardBody>
-                                    <Form>
+                            <Form onSubmit={handleSubmit}>
+                                <Card>
+                                    <CardHeader>
+                                        <h4 className="title">Buy Stocks</h4>
+                                    </CardHeader>
+                                    <CardBody>
                                         <Row>
                                             <Col md="6">
                                                 <FormGroup>
@@ -86,7 +87,11 @@ export default function BuyStock(props) {
                                             <Col md="6">
                                                 <FormGroup>
                                                     <label>Price (Single Stock)</label>
-                                                    <Input type="text" disabled value="0" />
+                                                    <h4> {props.stocksValue.map((object) => {
+                                                        if (object["company"] === company)
+                                                            return object["close"]
+                                                    })} </h4>
+                                                    {/* <Input type="text" disabled value={props.stocksValue[0]["close"]} /> */}
                                                 </FormGroup>
                                             </Col>
                                         </Row>
@@ -97,30 +102,26 @@ export default function BuyStock(props) {
                                                     <Input
                                                         type="number"
                                                         value={numberOfStocks}
-                                                        onChange={(event)=>setNumberOfStocks(event.target.value)}
+                                                        onChange={(event) => { if (event.target.value >= 1) setNumberOfStocks(event.target.value) }}
                                                     />
                                                 </FormGroup>
                                             </Col>
                                             <Col md="6">
                                                 <FormGroup>
                                                     <label>Total Cost</label>
-                                                    <Input
-                                                        type="text"
-                                                        value="0"
-                                                        disabled
-                                                    />
+                                                    <h4>{total} </h4>
                                                 </FormGroup>
                                             </Col>
                                         </Row>
-                                      
-                                    </Form>
-                                </CardBody>
-                                <CardFooter>
-                                    <Button className="btn-fill"  type="submit">
-                                        Buy
-                                    </Button>
-                                </CardFooter>
-                            </Card>
+
+                                    </CardBody>
+                                    <CardFooter>
+                                        <Button className="btn-fill" type="submit">
+                                            Buy
+                                        </Button>
+                                    </CardFooter>
+                                </Card>
+                            </Form>
                         </Col>
                         <Col md="4">
                             <Card className="">
@@ -128,7 +129,7 @@ export default function BuyStock(props) {
                                     <h4>Available Balance</h4>
                                 </CardHeader>
                                 <CardBody>
-                                        <h3>{"test balance"}</h3>        
+                                    <h3>USD{" "+balance}</h3>
                                 </CardBody>
                             </Card>
                         </Col>

@@ -10,10 +10,6 @@ import { validateUserLogin } from 'redux/userAPI';
 import { polygonClient, restClient, websocketClient } from "polygon.io";
 
 
-
-
-
-
 const useStyles = makeStyles(styles);
 
 function Login(props) {

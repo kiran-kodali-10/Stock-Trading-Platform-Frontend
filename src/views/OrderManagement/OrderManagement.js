@@ -44,49 +44,64 @@ export default function OrderManagement() {
     }
     const access_key = "5398922545b415aec4f3d76427f5c66b";
 
-    const [value, setValue] = useState();
-    const [stockPrices, setStockPrices] = useState([
-        {
-            "companyName": "AAPL",
-            "value": 0
-        }
-    ]);
+    const [value, setValue] = useState([]);
+    const [stockPrices, setStockPrices] = useState([]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
     useEffect(() => {
-        companies.forEach((companyName) => {
-            fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${companyName}&apikey=demo&datatype=csv`, {
-                method: "GET",
-            })
-                .then(response => response.text())
-                .then(data => {
-                    Papa.parse(data, {
-                        header: true,
-                        complete: (results) => {
-                            console.log(results.data[0]);
-                            const value = results.data[0];
-                            setStockPrices(prevPrices => {
-                                // Check if the company already exists in the array
-                                const existingIndex = prevPrices.findIndex(stock => stock.companyName === companyName);
-
-                                if (existingIndex !== -1) {
-                                    // If the company exists, update its value
-                                    const updatedStockPrices = [...prevPrices];
-                                    updatedStockPrices[existingIndex] = { companyName, value };
-                                    return updatedStockPrices;
-                                } else {
-                                    // If the company doesn't exist, add it to the array
-                                    return [...prevPrices, { companyName, value }];
-                                }
-                            });
-                        }
-                    })
-                })
-                .catch(error => console.log(error));
+        fetch("/api/stocks/all",{
+            method: "GET"
         })
+        .then(response=>response.json())
+        .then(data=>{
+            console.log(data[0]);
+            console.log(data[100]);
+            console.log(data[200]);
+            console.log(data[300]);
+            let temp =[];
+            temp.push({"company": "Apple", "symbol":"AAPl", "close":data[0]["close"]});
+            temp.push({"company": "Amazon","symbol":"AMZN", "close":data[100]["close"]});
+            temp.push({"company": "Google","symbol":"GOOG", "close":data[200]["close"]});
+            temp.push({"company": "Microsoft","symbol":"MSFT", "close":data[300]["close"]});
+
+
+            setStockPrices(temp)
+        })
+        // setTimeout(() => {
+        //     companies.forEach((companyName) => {
+        //         fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${companyName}&apikey=demo&datatype=csv`, {
+        //             method: "GET",
+        //         })
+        //             .then(response => response.text())
+        //             .then(data => {
+        //                 Papa.parse(data, {
+        //                     header: true,
+        //                     complete: (results) => {
+        //                         console.log(results.data[0]);
+        //                         const value = results.data[0];
+        //                         setStockPrices(prevPrices => {
+        //                             // Check if the company already exists in the array
+        //                             const existingIndex = prevPrices.findIndex(stock => stock.companyName === companyName);
+
+        //                             if (existingIndex !== -1) {
+        //                                 // If the company exists, update its value
+        //                                 const updatedStockPrices = [...prevPrices];
+        //                                 updatedStockPrices[existingIndex] = { companyName, value };
+        //                                 return updatedStockPrices;
+        //                             } else {
+        //                                 // If the company doesn't exist, add it to the array
+        //                                 return [...prevPrices, { companyName, value }];
+        //                             }
+        //                         });
+        //                     }
+        //                 })
+        //             })
+        //             .catch(error => console.log(error));
+        //     })
+        // }, 20000)
 
     }, [])
 
@@ -103,6 +118,7 @@ export default function OrderManagement() {
                     <Tab style={{ color: "white" }} label="buy" {...a11yProps(0)} />
                     <Tab style={{ color: "white" }} label="sell" {...a11yProps(1)} />
                 </Tabs>
+                {value.length===0?<h4>Select one of the above</h4>:null}
             </Box>
             <CustomTabPanel value={value} index={0} >
                 <BuyStock stocksValue={stockPrices} />
