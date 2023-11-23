@@ -67,41 +67,8 @@ export default function OrderManagement() {
             temp.push({"company": "Google","symbol":"GOOG", "close":data[200]["close"]});
             temp.push({"company": "Microsoft","symbol":"MSFT", "close":data[300]["close"]});
 
-
             setStockPrices(temp)
         })
-        // setTimeout(() => {
-        //     companies.forEach((companyName) => {
-        //         fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${companyName}&apikey=demo&datatype=csv`, {
-        //             method: "GET",
-        //         })
-        //             .then(response => response.text())
-        //             .then(data => {
-        //                 Papa.parse(data, {
-        //                     header: true,
-        //                     complete: (results) => {
-        //                         console.log(results.data[0]);
-        //                         const value = results.data[0];
-        //                         setStockPrices(prevPrices => {
-        //                             // Check if the company already exists in the array
-        //                             const existingIndex = prevPrices.findIndex(stock => stock.companyName === companyName);
-
-        //                             if (existingIndex !== -1) {
-        //                                 // If the company exists, update its value
-        //                                 const updatedStockPrices = [...prevPrices];
-        //                                 updatedStockPrices[existingIndex] = { companyName, value };
-        //                                 return updatedStockPrices;
-        //                             } else {
-        //                                 // If the company doesn't exist, add it to the array
-        //                                 return [...prevPrices, { companyName, value }];
-        //                             }
-        //                         });
-        //                     }
-        //                 })
-        //             })
-        //             .catch(error => console.log(error));
-        //     })
-        // }, 20000)
 
     }, [])
 

@@ -31,7 +31,7 @@ export default function BuyStock(props) {
     useEffect(() => {
         const stockValue = props.stocksValue.find((element) => element["company"] === company)
         setTotal(parseFloat(parseFloat(stockValue["close"]) * parseInt(numberOfStocks)))
-    }, [numberOfStocks])
+    }, [numberOfStocks, company])
 
     const symbols = {
         "Apple": "AAPL",
@@ -43,12 +43,25 @@ export default function BuyStock(props) {
     const handleDropdownChange = (event) => {
         console.log(event.target.value);
         setCompany(Object.keys(symbols).find(key => symbols[key] === event.target.value));
-        setNumberOfStocks(0)
+        setNumberOfStocks(1)
+
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("inside handle submit")
+        fetch("/api/stocks/buy", {
+            method: "POST",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                company,
+                numberOfStocks,
+                timestamp: Date.now()
+            }),
+        })
     }
 
     return (
@@ -129,7 +142,7 @@ export default function BuyStock(props) {
                                     <h4>Available Balance</h4>
                                 </CardHeader>
                                 <CardBody>
-                                    <h3>USD{" "+balance}</h3>
+                                    <h3>USD{" " + balance}</h3>
                                 </CardBody>
                             </Card>
                         </Col>

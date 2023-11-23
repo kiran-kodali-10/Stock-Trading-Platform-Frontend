@@ -14,6 +14,9 @@ export const userSlice = createSlice({
         logout:(state, action)=>{
             state.userDetails = []
             state.logout = true
+        },
+        updateBalance: (state, action)=>{
+            state.userDetails[0].balance = action.payload.balance
         }
     }
 })

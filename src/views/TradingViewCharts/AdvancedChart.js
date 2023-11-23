@@ -24,6 +24,10 @@ function TradingViewWidget() {
             [
               "Microsoft",
               "MSFT|1D"
+            ],
+            [
+              "Amazon",
+              "AMZN|1D"
             ]
           ],
           "chartOnly": false,

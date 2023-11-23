@@ -61,7 +61,34 @@ export const registerUser = (userDetails) => {
         }
         catch(error){
             console.log(error);
+            alert("Email already exists")
+        }
+    }
+}
 
+export const getBalance = (userId) => {
+    return async (dispatch) => {
+        const fetchData = async () => {
+            const response = await fetch(`/api/users/getBalance/${userId}`, {
+                method: "GET",
+            })
+            if (!response.ok) {
+                throw new Error("Error Fetching balance")
+            }
+            const data = await response.json();
+            return data;
+        }
+        try {
+            const data = await fetchData();
+            console.log(data);
+            dispatch(userActions.updateBalance({
+                "balance": data
+            }))
+            
+        }
+        catch(error){
+            console.log(error);
+            
         }
     }
 }

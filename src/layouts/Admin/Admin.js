@@ -28,7 +28,7 @@ function Admin(props) {
   const logout = useSelector(state => state.user.logout);
 
   React.useEffect(() => {
-    if(logout)
+    // if(logout)
       if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
       document.documentElement.classList.remove("perfect-scrollbar-off");
@@ -51,7 +51,7 @@ function Admin(props) {
     };
   });
   React.useEffect(() => {
-    if(logout)
+    // if(logout)
     if (navigator.platform.indexOf("Win") > -1) {
       let tables = document.querySelectorAll(".table-responsive");
       for (let i = 0; i < tables.length; i++) {
