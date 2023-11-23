@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     Card,
     Button,
@@ -19,10 +19,14 @@ import {
     UncontrolledDropdown
 
 } from "reactstrap";
+import { buyStock } from "redux/orderAPI";
 
 export default function BuyStock(props) {
 
     const balance = useSelector(state => state.user.userDetails[0].balance)
+    const uid = useSelector(state => state.user.userDetails[0].id)
+
+    const dispatch = useDispatch();
 
     const [company, setCompany] = useState("Apple");
     const [numberOfStocks, setNumberOfStocks] = useState(1);
@@ -36,7 +40,7 @@ export default function BuyStock(props) {
     const symbols = {
         "Apple": "AAPL",
         "Amazon": "AMZN",
-        "Microsoft": "MSFT",
+        // "Microsoft": "MSFT",
         "Google": "GOOG"
     }
 
@@ -49,19 +53,19 @@ export default function BuyStock(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("inside handle submit")
-        fetch("/api/stocks/buy", {
-            method: "POST",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                company,
-                numberOfStocks,
-                timestamp: Date.now()
-            }),
-        })
+        // console.log(symbols[company])
+        const temp = {
+            "uid": uid,
+            "symbol":symbols[company],
+            "buySell":"BUY",
+            "status":"PAID",
+            "mode": "LIMIT_ORDER",
+            "timestamp": Date.now(),
+            "quantity": numberOfStocks
+
+        }
+        dispatch(buyStock(temp))
+        
     }
 
     return (
@@ -69,7 +73,7 @@ export default function BuyStock(props) {
             <div className="">
                 <div className="">
                     <Row>
-                        <Col md="8">
+                        <Col>
                             <Form onSubmit={handleSubmit}>
                                 <Card>
                                     <CardHeader>
@@ -136,7 +140,7 @@ export default function BuyStock(props) {
                                 </Card>
                             </Form>
                         </Col>
-                        <Col md="4">
+                        {/* <Col md="4">
                             <Card className="">
                                 <CardHeader>
                                     <h4>Available Balance</h4>
@@ -145,7 +149,7 @@ export default function BuyStock(props) {
                                     <h3>USD{" " + balance}</h3>
                                 </CardBody>
                             </Card>
-                        </Col>
+                        </Col> */}
                     </Row>
 
 

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // reactstrap components
 import {
@@ -19,6 +20,7 @@ import {
     DropdownMenu,
     DropdownItem,
 } from "reactstrap";
+import { getStocks } from "redux/orderAPI";
 
 
 
@@ -43,19 +45,33 @@ export default function SellStock(props) {
         }
     ]
 
-    const symbols = userStocksData.map(object => object.symbol)
+
+    const dispatch = useDispatch();
+    const userId = useSelector(state=>state.user.userDetails[0].id)
+    const userStocks = useSelector(state=>state.order.stockTransactions)
+    // const userStocks = useSelector(state=>state.)
+
+    const symbols = userStocks.map(object => object.symbol)
     const [quantity, setQuantity] = useState(1);
     const [company, setCompany] = useState();
 
-    const handleDropdownChange = (event) => 
-        
+
+    useEffect(()=>{
+        dispatch(getStocks(userId))
+        console.log(userStocks)
+    },[company])
+
+    const handleDropdownChange = (event) => {
+
         setCompany(event.target.value);
-        // setNumberOfStocks(0)
-    
+    }
+
+    // setNumberOfStocks(0)
+
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-
+        alert("order placed successfully")
     }
 
     return (
@@ -88,9 +104,9 @@ export default function SellStock(props) {
                                         </UncontrolledDropdown>
                                     </FormGroup>
                                     {
-                                        userStocksData.map(stock => {
+                                        userStocks.map(stock => {
                                             if (company === stock.symbol) return (
-                                                <h5> Available: {stock.uid} </h5>
+                                                <h5> Available: {stock.quantity} </h5>
                                             )
                                         })
                                     }
@@ -102,9 +118,9 @@ export default function SellStock(props) {
                                                     onChange={e => { if (e.target.value >= 1) setQuantity(e.target.value) }} required />
                                             </FormGroup>
                                         </Col>
-                                        <Col md={6}>
+                                        {/* <Col md={6}>
                                             <h3>profit/loss</h3>
-                                        </Col>
+                                        </Col> */}
                                     </Row>
                                     <Button type="submit">
                                         Sell

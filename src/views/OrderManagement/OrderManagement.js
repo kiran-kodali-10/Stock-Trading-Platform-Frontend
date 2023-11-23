@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Box, Tab, Tabs } from "@material-ui/core";
 import SellStock from "./SellStock";
 import Papa from 'papaparse';
+import { useDispatch, useSelector } from "react-redux";
+import { getStocks } from "redux/orderAPI";
 
 
 
@@ -50,25 +52,31 @@ export default function OrderManagement() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    const dispatch = useDispatch();
+    const userId = useSelector(state=>state.user.userDetails[0].id)
 
     useEffect(() => {
-        fetch("/api/stocks/all",{
+        fetch("/api/stocks/all", {
             method: "GET"
         })
-        .then(response=>response.json())
-        .then(data=>{
-            console.log(data[0]);
-            console.log(data[100]);
-            console.log(data[200]);
-            console.log(data[300]);
-            let temp =[];
-            temp.push({"company": "Apple", "symbol":"AAPl", "close":data[0]["close"]});
-            temp.push({"company": "Amazon","symbol":"AMZN", "close":data[100]["close"]});
-            temp.push({"company": "Google","symbol":"GOOG", "close":data[200]["close"]});
-            temp.push({"company": "Microsoft","symbol":"MSFT", "close":data[300]["close"]});
+            .then(response => response.json())
+            .then(data => {
+                console.log(data[0]);
+                console.log(data[100]);
+                console.log(data[200]);
+                console.log(data[300]);
+                let temp = [];
+                temp.push({ "company": "Apple", "symbol": "AAPl", "close": data[0]["close"] });
+                temp.push({ "company": "Amazon", "symbol": "AMZN", "close": data[100]["close"] });
+                temp.push({ "company": "Google", "symbol": "GOOG", "close": data[200]["close"] });
+                // temp.push({ "company": "Microsoft", "symbol": "MSFT", "close": data[300]["close"] });
 
-            setStockPrices(temp)
-        })
+                setStockPrices(temp)
+            })
+
+
+            dispatch(getStocks(userId))
+
 
     }, [])
 
@@ -85,7 +93,7 @@ export default function OrderManagement() {
                     <Tab style={{ color: "white" }} label="buy" {...a11yProps(0)} />
                     <Tab style={{ color: "white" }} label="sell" {...a11yProps(1)} />
                 </Tabs>
-                {value.length===0?<h4>Select one of the above</h4>:null}
+                {value.length === 0 ? <h4>Select one of the above</h4> : null}
             </Box>
             <CustomTabPanel value={value} index={0} >
                 <BuyStock stocksValue={stockPrices} />

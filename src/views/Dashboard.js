@@ -60,33 +60,35 @@ function Dashboard(props) {
                     <tr>
                       <th>Name</th>
                       <th>Symbol</th>
-                      <th>app?</th>
-                      <th>rate</th>
-                      <th>quantity</th>
+                      {/* <th>app?</th> */}
+                      <th>Price</th>
+                      {/* <th>quantity</th> */}
                       <th>current</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Apple</td>
-                      <td>AAPL</td>
-                      <td>AAPL</td>
+                      <td>Google</td>
+                      <td>GOOG</td>
+                      {/* <td>AAPL</td> */}
                       <td>$150</td>
-                      <td>1</td>
+                      {/* <td>1</td> */}
                       <td>
-                        <i style={{ color: "green", paddingRight: "5px" }} className="fa-solid fa-arrow-up" />
-                        10%
+                        {/* <i style={{ color: "green", paddingRight: "5px" }} className="fa-solid fa-arrow-up" /> */}
+                        <i style={{ color: "red", paddingRight: "5px" }} className="fa-solid fa-arrow-down" />
+                        8%
                       </td>
                     </tr>
                     <tr>
-                      <td>Google</td>
-                      <td>GOOG</td>
-                      <td>GOOG</td>
-                      <td>$150</td>
-                      <td>1</td>
+                      <td>Amazon</td>
+                      <td>AMZN</td>
+                      {/* <td>GOOG</td> */}
+                      <td>$130</td>
+                      {/* <td>1</td> */}
                       <td>
-                        <i style={{ color: "red", paddingRight: "5px" }} className="fa-solid fa-arrow-down" />
-                        10%
+                        <i style={{ color: "green", paddingRight: "5px" }} className="fa-solid fa-arrow-up" />
+                        {/* <i style={{ color: "red", paddingRight: "5px" }} className="fa-solid fa-arrow-down" /> */}
+                        12.85%
                       </td>
                     </tr>
                   </tbody>
